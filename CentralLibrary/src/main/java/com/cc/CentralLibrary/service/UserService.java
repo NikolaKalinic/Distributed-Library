@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
-    public boolean rendBook(Long jmbg) {
-        User u = userRepository.findByJmbg(jmbg);
-        return (u != null && u.getNumberOfBooks() < 3) ? incNumberOfBook(jmbg) : false;
+    public boolean rentBook(Long id) {
+        User u = userRepository.findById(id).get();
+        return (u != null && u.getNumberOfBooks() < 3) ? incNumberOfBook(u.getJmbg()) : false;
     }
 
     private boolean incNumberOfBook(Long jmbg) {
@@ -24,6 +24,8 @@ public class UserService {
 
     public void returnBook(Long jmbg) {
         User u = userRepository.findByJmbg(jmbg);
+        if (u.getNumberOfBooks() <= 0)
+            return;
         u.setNumberOfBooks(u.getNumberOfBooks() - 1);
         userRepository.save(u);
     }

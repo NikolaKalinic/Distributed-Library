@@ -15,9 +15,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @PutMapping("/rent/{jmbg}")
-    public ResponseEntity rentBook(@PathVariable("jmbg") Long jmbg) {
-        return userService.rendBook(jmbg) ? ResponseEntity.status(HttpStatus.OK).body("User rented successfully.") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already has 3 rents.");
+    @PutMapping("/rent/{id}")
+    public ResponseEntity rentBook(@PathVariable("id") Long id) {
+        return userService.rentBook(id) ? ResponseEntity.status(HttpStatus.OK).body("User rented successfully.") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already has 3 rents.");
     }
 
     @PutMapping("/return/{jmbg}")

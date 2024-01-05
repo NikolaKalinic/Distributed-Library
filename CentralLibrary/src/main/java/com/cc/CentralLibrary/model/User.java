@@ -1,7 +1,6 @@
 package com.cc.CentralLibrary.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,8 +20,7 @@ public class User {
     private String firstname;
     @Column(name = "lastname", nullable = false)
     private String lastname;
-    @Column(name = "jmbg", unique = true, nullable = false, length = 13)
-    @Digits(integer = 13, fraction = 0, message = "JMBG must be a numeric value with up to 13 digits.")
+    @Column(name = "jmbg", unique = true, nullable = false)
     private Long jmbg;
     @Column(name = "address", nullable = false)
     private String address;
