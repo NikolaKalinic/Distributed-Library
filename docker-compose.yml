@@ -1,7 +1,7 @@
 services:
-  mysql:
+  mysql_db:
     image: mysql:latest
-    container_name: mysql
+    container_name: mysql_db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: central
@@ -12,5 +12,28 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+  postgres_db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: central
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  central:
+    build: ./CentralLibrary
+    restart: always
+    container_name: central
+    ports:
+      - 9000:9000
+    depends_on:
+      - mysql_db
+
+
 volumes:
   mysql_data:
+  postgres_data:
