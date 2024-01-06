@@ -18,7 +18,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: central
+      POSTGRES_DB: city
     ports:
       - "5434:5432"
     volumes:
@@ -32,7 +32,15 @@ services:
       - 9000:9000
     depends_on:
       - mysql_db
-
+  
+  city:
+    build: ./CityLibrary
+    restart: always
+    container_name: city
+    ports:
+      - 9001:9001
+    depends_on:
+      - postgres_db
 
 volumes:
   mysql_data:

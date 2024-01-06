@@ -4,6 +4,6 @@ COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
 FROM openjdk:17-jdk-slim
-COPY --from=build /home/app/target/CentralLibrary-0.0.1-SNAPSHOT.jar /app/central.jar
+COPY --from=build /home/app/target/CityLibrary-0.0.1-SNAPSHOT.jar /app/city.jar
 WORKDIR /app
-ENTRYPOINT ["java","-jar","central.jar"]
+ENTRYPOINT ["java","-jar","city.jar"]

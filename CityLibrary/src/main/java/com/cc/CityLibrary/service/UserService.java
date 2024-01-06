@@ -14,14 +14,11 @@ public class UserService {
     public boolean register(User u) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String url = "http://localhost:9000/api/central/register";
+            String url = "http://central:9000/api/central/register";
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<User> requestEntity = new HttpEntity<>(u, headers);
-            ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
-
-            String responseBody = responseEntity.getBody();
-            System.out.println("Response Body: " + responseBody);
+            restTemplate.postForEntity(url, requestEntity, String.class);
             return true;
         } catch (Exception e){
             return false;

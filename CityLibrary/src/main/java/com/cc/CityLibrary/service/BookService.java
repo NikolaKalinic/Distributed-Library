@@ -19,7 +19,7 @@ public class BookService {
     public boolean returnBook(Long jmbg) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String url = "http://localhost:9000/api/central/return/" + jmbg;
+            String url = "http://central:9000/api/central/return/" + jmbg;
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -43,7 +43,7 @@ public class BookService {
             throw new IsbnException();
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String url = "http://localhost:9000/api/central/rent/"+book.getUserId();
+            String url = "http://central:9000/api/central/rent/"+book.getUserId();
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
