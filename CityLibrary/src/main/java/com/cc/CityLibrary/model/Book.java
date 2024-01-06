@@ -24,7 +24,7 @@ public class Book {
     private String author;
     @Column(name = "isbn", unique = true, nullable = false)
     private Long isbn;
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     private LocalDate date;
     @Column(name = "userId",nullable = false)
     private Long userId;

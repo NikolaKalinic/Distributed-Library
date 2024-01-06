@@ -1,4 +1,4 @@
-package com.cc.CityLibrary.model;
+package com.cc.CityLibrary.dto;
 
 import jakarta.validation.constraints.Digits;
 import lombok.AllArgsConstructor;

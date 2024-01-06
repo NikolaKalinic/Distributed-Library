@@ -1,6 +1,6 @@
 package com.cc.CityLibrary.service;
 
-import com.cc.CityLibrary.model.User;
+import com.cc.CityLibrary.dto.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

@@ -1,6 +1,6 @@
 package com.cc.CityLibrary.contoler;
 
-import com.cc.CityLibrary.model.User;
+import com.cc.CityLibrary.dto.User;
 import com.cc.CityLibrary.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
