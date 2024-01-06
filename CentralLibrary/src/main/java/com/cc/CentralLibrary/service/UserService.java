@@ -1,5 +1,6 @@
 package com.cc.CentralLibrary.service;
 
+import com.cc.CentralLibrary.exception.ReturnException;
 import com.cc.CentralLibrary.model.User;
 import com.cc.CentralLibrary.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class UserService {
     public void returnBook(Long jmbg) {
         User u = userRepository.findByJmbg(jmbg);
         if (u.getNumberOfBooks() <= 0)
-            return;
+            throw new ReturnException();
         u.setNumberOfBooks(u.getNumberOfBooks() - 1);
         userRepository.save(u);
     }

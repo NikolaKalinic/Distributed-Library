@@ -20,8 +20,6 @@ public class BookContoller {
 
     @PutMapping("/return/{jmbg}")
     public ResponseEntity returnBook(@PathVariable("jmbg") Long jmbg) {
-        bookService.returnBook(jmbg);
-        return ResponseEntity.status(HttpStatus.OK).body("User returned book.");
+        return bookService.returnBook(jmbg) ? ResponseEntity.status(HttpStatus.OK).body("User returned book.") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This user has 0 rented books.");
     }
-    //TODO AKO JMBG NE POSTOJI UHVATITI TAJ SLUCAJ
 }
