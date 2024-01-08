@@ -1,0 +1,38 @@
+name: CC Project
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Create City image on DockerHub
+      uses: docker/build-push-action@v3
+      with:
+        context: ./CityLibrary
+        file: ./CityLibrary/Dockerfile
+        push: true
+        tags: |
+          kalinic/city_lib:${{ github.run_id }}
+          kalinic/city_lib:latest
+          
+    - name: Create Central image on DockerHub
+      uses: docker/build-push-action@v3
+      with:
+        context: ./CentralLibrary
+        file: ./CentralLibrary/Dockerfile
+        push: true
+        tags: |
+          kalinic/central_lib:${{ github.run_id }}
+          kalinic/central_lib:latest
+    
