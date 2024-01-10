@@ -28,15 +28,19 @@ services:
     build: ./CentralLibrary
     restart: always
     container_name: central
+    environment:
+      - MYSQL_DB_HOST=mysql_db
     ports:
       - 9000:9000
     depends_on:
       - mysql_db
-  
+
   city:
     build: ./CityLibrary
     restart: always
     container_name: city
+    environment:
+      - POSTGRES_DB_HOST=postgres_db
     ports:
       - 9001:9001
     depends_on:
