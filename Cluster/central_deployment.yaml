@@ -17,7 +17,6 @@ spec:
           image: kalinic/central_lib:latest
           ports:
             - containerPort: 9000
-          # Add other configuration for your central-lib container if needed
         - name: mysql-db-container
           image: mysql:latest
           env:
@@ -31,4 +30,10 @@ spec:
               value: root
           ports:
             - containerPort: 3306
-          # Add other configuration for your MySQL container if needed
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
