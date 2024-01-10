@@ -30,6 +30,7 @@ services:
     container_name: central
     environment:
       - MYSQL_DB_HOST=mysql_db
+      - CENTRAL_HOST=central
     ports:
       - 9000:9000
     depends_on:

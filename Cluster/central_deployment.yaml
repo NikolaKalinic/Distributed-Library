@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: central-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: central-app
+  template:
+    metadata:
+      labels:
+        app: central-app
+    spec:
+      containers:
+        - name: central-lib-container
+          image: kalinic/central_lib:latest
+          ports:
+            - containerPort: 9000
+          # Add other configuration for your central-lib container if needed
+        - name: mysql-db-container
+          image: mysql:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: central
+            - name: MYSQL_USER
+              value: user
+            - name: MYSQL_PASSWORD
+              value: root
+          ports:
+            - containerPort: 3306
+          # Add other configuration for your MySQL container if needed
