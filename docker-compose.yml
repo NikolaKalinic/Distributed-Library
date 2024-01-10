@@ -27,7 +27,7 @@ services:
   central:
     build: ./CentralLibrary
     restart: always
-    container_name: central
+    container_name: central-app-service
     environment:
       - MYSQL_DB_HOST=mysql_db
       - CENTRAL_HOST=central
