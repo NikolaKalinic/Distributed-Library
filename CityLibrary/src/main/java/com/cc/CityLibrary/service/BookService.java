@@ -34,6 +34,7 @@ public class BookService {
             );
             return true;
         } catch (Exception e){
+            System.out.println(e);
             return false;
         }
     }
@@ -60,6 +61,7 @@ public class BookService {
             bookRepository.save(book);
             return true;
         } catch (Exception e){
+            System.out.println(e);
             return false;
         }
     }

@@ -21,6 +21,7 @@ public class UserService {
             restTemplate.postForEntity(url, requestEntity, String.class);
             return true;
         } catch (Exception e){
+            System.out.println(e);
             return false;
         }
     }
