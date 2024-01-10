@@ -14,7 +14,8 @@ public class UserService {
     public boolean register(User u) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String url = "http://${CENTRAL_HOST:localhost}:9000/api/central/register";
+            String url = "http://${CENTRAL_HOST}:9000/api/central/register";
+            System.out.println(url);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<User> requestEntity = new HttpEntity<>(u, headers);
