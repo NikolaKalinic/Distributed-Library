@@ -7,22 +7,40 @@ services:
       MYSQL_DATABASE: central
       MYSQL_USER: user
       MYSQL_PASSWORD: root
-    ports:
-      - "3307:3306"
+    # ports:
+    #   - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
-  postgres_db:
+  postgres_db_bg:
     image: postgres:latest
-    container_name: postgres_db
+    container_name: postgres_db_bg
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: root
       POSTGRES_DB: city
-    ports:
-      - "5434:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_bg:/var/lib/postgresql/data
+
+  postgres_db_ns:
+    image: postgres:latest
+    container_name: postgres_db_ns
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: city
+    volumes:
+      - postgres_data_ns:/var/lib/postgresql/data
+
+  postgres_db_ni:
+    image: postgres:latest
+    container_name: postgres_db_ni
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: city
+    volumes:
+      - postgres_data_ni:/var/lib/postgresql/data
 
   central:
     build: ./CentralLibrary
@@ -31,22 +49,49 @@ services:
     environment:
       - MYSQL_DB_HOST=mysql_db
       - CENTRAL_HOST=central
-    ports:
-      - 9000:9000
+    # ports:
+    #   - 9000:9000
     depends_on:
       - mysql_db
 
-  city:
+  bgcity:
     build: ./CityLibrary
     restart: always
-    container_name: city
+    container_name: bgcity
     environment:
-      - POSTGRES_DB_HOST=postgres_db
+      - POSTGRES_DB_HOST=postgres_db_bg
+      - SERVER_SERVLET_CONTEXT_PATH=/bg
     ports:
       - 9001:9001
     depends_on:
-      - postgres_db
+      - postgres_db_bg
+
+  nscity:
+    build: ./CityLibrary
+    restart: always
+    container_name: nscity
+    environment:
+      - POSTGRES_DB_HOST=postgres_db_ns
+      - SERVER_SERVLET_CONTEXT_PATH=/ns
+    ports:
+      - 9002:9001
+    depends_on:
+      - postgres_db_ns
+
+  nicity:
+    build: ./CityLibrary
+    restart: always
+    container_name: nicity
+    environment:
+      - POSTGRES_DB_HOST=postgres_db_ni
+      - SERVER_SERVLET_CONTEXT_PATH=/ni
+    ports:
+      - 9003:9001
+    depends_on:
+      - postgres_db_ni
 
 volumes:
   mysql_data:
-  postgres_data:
+  postgres_data_bg:
+  postgres_data_ns:
+  postgres_data_ni:
