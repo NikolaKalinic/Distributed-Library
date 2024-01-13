@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: city-app-bg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: city-app-bg
+  template:
+    metadata:
+      labels:
+        app: city-app-bg
+    spec:
+      containers:
+        - name: city-lib-bg-container
+          image: kalinic/city_lib:latest
+          ports:
+            - containerPort: 9001
+          env:
+            - name: CENTRAL_HOST
+              value: central-app-service
+            - name: SERVER_SERVLET_CONTEXT_PATH
+              value: /bg
+        - name: postgres-db-bg-container
+          image: postgres:latest
+          env:
+            - name: POSTGRES_DB
+              value: city
+            - name: POSTGRES_USER
+              value: user
+            - name: POSTGRES_PASSWORD
+              value: root
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-persistent-storage-bg
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-persistent-storage-bg
+          persistentVolumeClaim:
+            claimName: postgres-pvc-bg
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: city-app-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: city-app-ns
+  template:
+    metadata:
+      labels:
+        app: city-app-ns
+    spec:
+      containers:
+        - name: city-lib-ns-container
+          image: kalinic/city_lib:latest
+          ports:
+            - containerPort: 9001
+          env:
+            - name: CENTRAL_HOST
+              value: central-app-service
+            - name: SERVER_SERVLET_CONTEXT_PATH
+              value: /ns
+        - name: postgres-db-ns-container
+          image: postgres:latest
+          env:
+            - name: POSTGRES_DB
+              value: city
+            - name: POSTGRES_USER
+              value: user
+            - name: POSTGRES_PASSWORD
+              value: root
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-persistent-storage-ns
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-persistent-storage-ns
+          persistentVolumeClaim:
+            claimName: postgres-pvc-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: city-app-ni
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: city-app-ni
+  template:
+    metadata:
+      labels:
+        app: city-app-ni
+    spec:
+      containers:
+        - name: city-lib-ni-container
+          image: kalinic/city_lib:latest
+          ports:
+            - containerPort: 9001
+          env:
+            - name: CENTRAL_HOST
+              value: central-app-service
+            - name: SERVER_SERVLET_CONTEXT_PATH
+              value: /ni
+        - name: postgres-db-ni-container
+          image: postgres:latest
+          env:
+            - name: POSTGRES_DB
+              value: city
+            - name: POSTGRES_USER
+              value: user
+            - name: POSTGRES_PASSWORD
+              value: root
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-persistent-storage-ni
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-persistent-storage-ni
+          persistentVolumeClaim:
+            claimName: postgres-pvc-ni

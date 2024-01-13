@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: city-app-bg-service
+spec:
+  selector:
+    app: city-app-bg
+  # type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 9001
+      targetPort: 9001
+      # nodePort: 30000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: city-app-ns-service
+spec:
+  selector:
+    app: city-app-ns
+  ports:
+    - protocol: TCP
+      port: 9001
+      targetPort: 9001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: city-app-ni-service
+spec:
+  selector:
+    app: city-app-ni
+  ports:
+    - protocol: TCP
+      port: 9001
+      targetPort: 9001
