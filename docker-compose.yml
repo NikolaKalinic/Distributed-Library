@@ -7,8 +7,6 @@ services:
       MYSQL_DATABASE: central
       MYSQL_USER: user
       MYSQL_PASSWORD: root
-    # ports:
-    #   - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -43,48 +41,45 @@ services:
       - postgres_data_ni:/var/lib/postgresql/data
 
   central:
-    build: ./CentralLibrary
+    image: kalinic/central_lib
     restart: always
     container_name: central-app-service
     environment:
       - MYSQL_DB_HOST=mysql_db
       - CENTRAL_HOST=central
-    # ports:
-    #   - 9000:9000
+    ports:
+      - 9000:9000
     depends_on:
       - mysql_db
 
   bgcity:
-    build: ./CityLibrary
+    image: kalinic/city_lib
     restart: always
     container_name: bgcity
     environment:
       - POSTGRES_DB_HOST=postgres_db_bg
-      - SERVER_SERVLET_CONTEXT_PATH=/bg
     ports:
       - 9001:9001
     depends_on:
       - postgres_db_bg
 
   nscity:
-    build: ./CityLibrary
+    image: kalinic/city_lib
     restart: always
     container_name: nscity
     environment:
       - POSTGRES_DB_HOST=postgres_db_ns
-      - SERVER_SERVLET_CONTEXT_PATH=/ns
     ports:
       - 9002:9001
     depends_on:
       - postgres_db_ns
 
   nicity:
-    build: ./CityLibrary
+    image: kalinic/city_lib
     restart: always
     container_name: nicity
     environment:
       - POSTGRES_DB_HOST=postgres_db_ni
-      - SERVER_SERVLET_CONTEXT_PATH=/ni
     ports:
       - 9003:9001
     depends_on:
